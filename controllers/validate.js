@@ -16,4 +16,11 @@ exports.validateLink = (req, res) => {
       .json({ message: "The requested video couldn't be located!" });
 };
 
-exports.getMetaInfo = (req, res) => {};
+exports.getMetaInfo = async (req, res) => {
+  const videoID = req.params.videoID;
+  if (!videoID || videoID === undefined)
+    res.status(400).json({ message: "Invalid or no video ID received" });
+  const link = getLinkFromVideoID(videoID);
+  const videoMeta = await ytdl.getInfo(link);
+  res.status(200).json(videoMeta.videoDetails);
+};
