@@ -4,6 +4,6 @@ const validateController = require("../controllers/validate");
 
 const router = express();
 
-router.post("/", validateController.validateLink);
+router.get("/:videoID", validateController.validateLink);
 
 module.exports = router;
